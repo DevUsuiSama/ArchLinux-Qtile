@@ -27,7 +27,7 @@
 
 
 ## Extras
-| Paquete | Descripcion |
+| Paquete | Descripción |
 |---|---|
 | ranger | Gestor de Archivos |
 | neofetch | CLI Informacion del Sistema |
