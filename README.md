@@ -1,5 +1,8 @@
 # QTILE CONFIGURACIÓN
 
+## Descripción
+La finalidad de este repositorio no es otra que la de guardar y almacenar los diseños y configuraciones realizadas, además de servir como guía para una posterior instalación.
+
 ## Preview
 ![preview](qtile/img/preview.png)
 
@@ -12,7 +15,7 @@
 | acpilight | Ajuste de Brillo |
 | network-manager-applet \| volumeicon | Systray |
 | rofi \| rofi-emoji | Iniciador |
-| autorandr | Detecta automáticamente el hardware de pantalla conectado y carga la configuración X11 adecuada mediante xrandr |
+| xlayoutdisplay | Generar Comando |
 
 ## Fuentes
 | Paquete | Descripción |

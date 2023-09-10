@@ -28,8 +28,8 @@ import os
 import subprocess
 import pytz
 from time import timezone
-from libqtile import hook
 
+from libqtile import hook
 from libqtile import bar, layout, widget
 from libqtile.config import Click, Drag, Group, Key, Match, Screen
 from libqtile.lazy import lazy
