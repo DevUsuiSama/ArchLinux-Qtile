@@ -9,13 +9,14 @@ La finalidad de este repositorio no es otra que la de guardar y almacenar los di
 ## Necesarios
 | Paquete | Descripción |
 |---|---|
-| alsa-utils | Sonido |
+| alsa-utils | Controlador De Tarjeta de Sonido |
 | picom | Compositor |
 | gnome-screenshot | Captura de Pantalla |
 | acpilight | Ajuste de Brillo |
 | network-manager-applet \| volumeicon | Systray |
 | rofi \| rofi-emoji | Iniciador |
-| xlayoutdisplay | Generar Comando |
+| xlayoutdisplay | Generar Comando para Xrandr |
+| libinput \| xf86-input-libinput \| xorg-xinput  | Manejar Dispositivos de Entrada |
 
 ## Fuentes
 | Paquete | Descripción |
@@ -28,15 +29,19 @@ La finalidad de este repositorio no es otra que la de guardar y almacenar los di
 |---|---|
 | papirus-icon-theme | Iconos SVG |
 
+## Theme [GTK]
+| Paquete | Descripción |
+|---|---|
+| flat-remix-gtk | Un Conjunto de Theme |
 
 ## Extras
 | Paquete | Descripción |
 |---|---|
 | ranger | Gestor de Archivos |
-| neofetch | CLI Informacion del Sistema |
+| neofetch | CLI Información del Sistema |
 | oh-my-posh | Motor de Temas Shell |
-| feh | Visualizador de Imagenes |
-| pulseaudio | Audio |
+| feh | Visualizador de Imágenes |
+| pulseaudio | ``` Audio \| Micrófono => OBS ``` |
 | flatpak | Marco de Distribución y Aislamiento de Aplicaciones Linux |
 
 ## Autor ✒️
