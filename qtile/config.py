@@ -26,264 +26,37 @@
 
 import os
 import subprocess
-import pytz
-from time import timezone
 
 from libqtile import hook
-from libqtile import bar, layout, widget
-from libqtile.config import Click, Drag, Group, Key, Match, Screen
+from libqtile import layout
+from libqtile.config import Click, Drag, Match
 from libqtile.lazy import lazy
-# from libqtile.utils import guess_terminal
+from libqtile.utils import guess_terminal
+
+from keybindings import create_key_bindings
+from groups import create_group, create_key_bindings_group
+from layouts import create_layouts
+from screens import create_screens
 
 mod = "mod4"
-alt = "mod1"
-# terminal = guess_terminal()
 
-keys = [
-    # nuevos atajos
-    Key([mod], "m", lazy.spawn("rofi -show combi"), desc="nuestro querido menu"),
+terminal = guess_terminal()
 
-    # ajuste de audio
-    Key([], "XF86AudioMute", lazy.spawn(
-        "amixer -q set Master toggle"), desc="algo"),
-    Key([], "XF86AudioLowerVolume", lazy.spawn(
-        "amixer -c 0 sset Master 5- unmute"), desc="algo"),
-    Key([], "XF86AudioRaiseVolume", lazy.spawn(
-        "amixer -c 0 sset Master 5+ unmute"), desc="algo"),
+keys = create_key_bindings(mod=mod)
 
-    # ajuste de brillo
-    Key([], "XF86MonBrightnessDown", lazy.spawn(
-        "xbacklight -dec 10"), desc="algo"),
-    Key([], "XF86MonBrightnessUp", lazy.spawn(
-        "xbacklight -inc 10"), desc="algo"),
+groups = create_group()
+create_key_bindings_group(mod=mod, groups=groups, keys=keys)
 
-    # captura de pantalla
-    Key([], "Print", lazy.spawn("gnome-screenshot -i"), desc="algo"),
-
-    # cambiar de idioma
-    Key([mod], "e", lazy.spawn("setxkbmap es"), desc="algo"),
-    Key([mod], "u", lazy.spawn("setxkbmap us"), desc="algo"),
-
-    # A list of available commands that can be bound to keys can be found
-    # at https://docs.qtile.org/en/latest/manual/config/lazy.html
-    # Switch between windows
-    Key([mod], "h", lazy.layout.left(), desc="Move focus to left"),
-    Key([mod], "l", lazy.layout.right(), desc="Move focus to right"),
-    Key([mod], "j", lazy.layout.down(), desc="Move focus down"),
-    Key([mod], "k", lazy.layout.up(), desc="Move focus up"),
-    Key([mod], "space", lazy.layout.next(),
-        desc="Move window focus to other window"),
-    # Move windows between left/right columns or move up/down in current stack.
-    # Moving out of range in Columns layout will create new column.
-    Key([mod, "shift"], "h", lazy.layout.shuffle_left(),
-        desc="Move window to the left"),
-    Key([mod, "shift"], "l", lazy.layout.shuffle_right(),
-        desc="Move window to the right"),
-    Key([mod, "shift"], "j", lazy.layout.shuffle_down(), desc="Move window down"),
-    Key([mod, "shift"], "k", lazy.layout.shuffle_up(), desc="Move window up"),
-    # Grow windows. If current window is on the edge of screen and direction
-    # will be to screen edge - window would shrink.
-    Key([mod, "control"], "h", lazy.layout.grow_left(),
-        desc="Grow window to the left"),
-    Key([mod, "control"], "l", lazy.layout.grow_right(),
-        desc="Grow window to the right"),
-    Key([mod, "control"], "j", lazy.layout.grow_down(), desc="Grow window down"),
-    Key([mod, "control"], "k", lazy.layout.grow_up(), desc="Grow window up"),
-    Key([mod], "n", lazy.layout.normalize(), desc="Reset all window sizes"),
-    # Toggle between split and unsplit sides of stack.
-    # Split = all windows displayed
-    # Unsplit = 1 window displayed, like Max layout, but still with
-    # multiple stack panes
-    Key(
-        [mod, "shift"],
-        "Return",
-        lazy.layout.toggle_split(),
-        desc="Toggle between split and unsplit sides of stack",
-    ),
-    Key([mod], "Return", lazy.spawn("alacritty"), desc="Launch terminal"),
-    # Toggle between different layouts as defined below
-    Key([mod], "Tab", lazy.next_layout(), desc="Toggle between layouts"),
-    Key([mod], "w", lazy.window.kill(), desc="Kill focused window"),
-    Key([mod, "control"], "r", lazy.reload_config(), desc="Reload the config"),
-    Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
-    Key([mod], "r", lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
-]
-
-groups = [Group(i) for i in "123456789"]
-
-for i in groups:
-    keys.extend(
-        [
-            # mod1 + letter of group = switch to group
-            Key(
-                [mod],
-                i.name,
-                lazy.group[i.name].toscreen(),
-                desc="Switch to group {}".format(i.name),
-            ),
-            # mod1 + shift + letter of group = switch to & move focused window to group
-            Key(
-                [mod, "shift"],
-                i.name,
-                lazy.window.togroup(i.name, switch_group=True),
-                desc="Switch to & move focused window to group {}".format(
-                    i.name),
-            ),
-            # Or, use below if you prefer not to switch to that group.
-            # # mod1 + shift + letter of group = move focused window to group
-            # Key([mod, "shift"], i.name, lazy.window.togroup(i.name),
-            #     desc="move focused window to group {}".format(i.name)),
-        ]
-    )
-
-# Configuración de los bordes de las ventanas
-_cdefault = {
-    "border_width": 1,
-    "margin": 5,
-    "border_focus": "00CA8A",
-    "border_normal": "1D2330",
-    "single_border_width": 0,
-    "single_margin": 10,
-}
-
-layouts = [
-    # layout.Columns(border_focus_stack=["#d75f5f", "#8f3d3d"], border_width=2),
-    # layout.Columns(**_cdefault),
-    layout.Max(**_cdefault),
-    # Try more layouts by unleashing below layouts.
-    # layout.Stack(num_stacks=2),
-    layout.Bsp(**_cdefault),
-    # layout.Matrix(),
-    # layout.MonadTall(**_cdefault),
-    # layout.MonadWide(),
-    # layout.RatioTile(),
-    # layout.Tile(),
-    layout.TreeTab(
-        font="Noto Sans",
-        fontsize=10,
-        sections=["PRIMERO", "SEGUNDO", "TERCERO", "CUARTO"],
-        section_fontsize=10,
-        border_width=2,
-        bg_color="1c1f24",
-        active_bg="c678dd",
-        active_fg="000000",
-        inactive_bg="a9a1e1",
-        inactive_fg="1c1f24",
-        padding_left=0,
-        padding_x=0,
-        padding_y=5,
-        section_top=10,
-        section_bottom=20,
-        level_shift=8,
-        vspace=3,
-        panel_width=200
-    ),
-    # layout.VerticalTile(),
-    # layout.Zoomy(),
-    layout.Floating(**_cdefault),
-]
+layouts = create_layouts()
 
 widget_defaults = dict(
-    font="Noto Sans",
+    font="MesloLGMDZ Nerd Font Mono, Bold",
     fontsize=12,
-    padding=3,
+    padding=4,
 )
 extension_defaults = widget_defaults.copy()
 
-screens = [
-    Screen(
-        top=bar.Bar(
-            [
-                widget.Sep(
-                    linewidth=0,
-                    padding=6
-                ),
-                widget.Image(
-                    filename="~/.config/qtile/icons/icons8-arch-linux.svg",
-                    scale="False"
-                ),
-                widget.Sep(
-                    linewidth=0,
-                    padding=6
-                ),
-                widget.CurrentLayout(
-                    font="MesloLGMDZ Nerd Font Mono, Bold",
-                    foreground="CE00FF"
-                ),
-                widget.Sep(
-                    linewidth=0,
-                    padding=6
-                ),
-                widget.GroupBox(
-                    active="#ffffff",
-                    rounded=False,
-                    highlight_color="007D55",
-                    highlight_method="line",
-                    borderwidth=0
-                ),
-                widget.Sep(
-                    linewidth=0,
-                    padding=6
-                ),
-                #widget.Prompt(),
-                widget.WindowName(
-                    foreground="#00CA8A",
-                    markup=True,
-                    font="MesloLGMDZ Nerd Font Mono, Bold",
-                    fontsize=12,
-                    max_chars=40
-                ),
-                #widget.Chord(
-                #    chords_colors={
-                #        "launch": ("#00ffff", "#ffffff"),
-                #    },
-                #    name_transform=lambda name: name.upper(),
-                #),
-                # widget.TextBox("default config", name="default"),
-                # widget.TextBox("Press &lt;M-r&gt; to spawn", foreground="#d75f5f"),
-                # NB Systray is incompatible with Wayland, consider using StatusNotifier instead
-                # widget.StatusNotifier(),
-                widget.Systray(),
-                widget.Sep(
-                    linewidth=0,
-                    padding=6
-                ),
-                widget.TextBox(
-                    text='',
-                    foreground="007D55",
-                    padding=0,
-                    fontsize=42
-                ),
-                widget.TextBox(
-                    font="MesloLGMDZ Nerd Font Mono, Bold",
-                    fontsize=18,
-                    text='',
-                    background="007D55",
-                    foreground="fff",
-                    padding=7
-                ),
-                widget.Clock(
-                    font="MesloLGMDZ Nerd Font Mono, Bold",
-                    fontsize=14,
-                    background="007D55",
-                    foreground="fff",
-                    format="%H:%M - %d/%m/%Y",
-                    update_interval=60.0,
-                    timezone=pytz.timezone("America/Argentina/Buenos_Aires")
-                ),
-                #widget.QuickExit(),
-            ],
-            25,
-            opacity=1,
-            margin=[5, 5, 1, 5],
-            background="000000",
-            border_width=4,  # Draw top and bottom borders
-            border_color=["003D29", "000000", "003D29", "000000"]  # Borders are magenta
-        ),
-        wallpaper="~/Imágenes/paisaje2.jpeg",
-        wallpaper_mode="fill"
-    )
-]
+screens = create_screens()
 
 # Drag floating layouts.
 mouse = [
@@ -333,6 +106,7 @@ wl_input_rules = None
 # We choose LG3D to maximize irony: it is a 3D non-reparenting WM written in
 # java that happens to be on java's whitelist.
 wmname = "LG3D"
+
 
 @hook.subscribe.startup_once
 def autostart():
