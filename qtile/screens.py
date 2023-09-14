@@ -88,8 +88,9 @@ def create_screens():
                         fontsize=14,
                         background="007D55",
                         foreground="fff",
-                        format="%H:%M - %d/%m/%Y",
-                        update_interval=60.0,
+                        format="%H:%M:%S - %d/%m/%Y",
+                        #update_interval=60.0,
+                        update_interval=1.0,
                         timezone=pytz.timezone(
                             "America/Argentina/Buenos_Aires")
                     ),
@@ -101,6 +102,8 @@ def create_screens():
                         fontsize=42
                     ),
                     widget.NetGraph(
+                        bandwidth_type="down",
+                        interface="wlo1",
                         margin_x=0,
                         margin_y=0,
                         border_color="000",
@@ -108,8 +111,13 @@ def create_screens():
                         fill_color="00b2b2",
                         frequency=1,
                         graph_color="00FFFF",
-                        line_width=1.5,
+                        line_width=2,
+                        sample=100,
                         type="linefill"
+                    ),
+                    widget.Sep(
+                        linewidth=0,
+                        padding=6
                     ),
                     # widget.QuickExit(),
                 ],
