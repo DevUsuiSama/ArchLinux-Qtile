@@ -11,6 +11,15 @@ from libqtile.config import Screen
 
 
 def create_screens():
+    colors = {
+        "primary": "55C5F1",
+        "clock": "0F8CBD",
+        "group_box": "0F8CBD",
+        "bar_margin": "06384B",
+        "window_name": "42BFF0",
+        "current_layout": "7BD2F4"
+    }
+
     return [
         Screen(
             top=bar.Bar(
@@ -29,7 +38,7 @@ def create_screens():
                     ),
                     widget.CurrentLayout(
                         font="MesloLGMDZ Nerd Font Mono, Bold",
-                        foreground="CE00FF"
+                        foreground=colors["current_layout"]
                     ),
                     widget.Sep(
                         linewidth=0,
@@ -38,7 +47,7 @@ def create_screens():
                     widget.GroupBox(
                         active="#ffffff",
                         rounded=False,
-                        highlight_color="007D55",
+                        highlight_color=colors["group_box"],
                         highlight_method="line",
                         borderwidth=0
                     ),
@@ -48,7 +57,7 @@ def create_screens():
                     ),
                     # widget.Prompt(),
                     widget.WindowName(
-                        foreground="#00CA8A",
+                        foreground=colors["window_name"],
                         markup=True,
                         font="MesloLGMDZ Nerd Font Mono, Bold",
                         fontsize=12,
@@ -71,7 +80,7 @@ def create_screens():
                     ),
                     widget.TextBox(
                         text='',
-                        foreground="007D55",
+                        foreground=colors["clock"],
                         padding=0,
                         fontsize=42
                     ),
@@ -79,24 +88,24 @@ def create_screens():
                         font="MesloLGMDZ Nerd Font Mono, Bold",
                         fontsize=18,
                         text='',
-                        background="007D55",
+                        background=colors["clock"],
                         foreground="fff",
                         padding=7
                     ),
                     widget.Clock(
                         font="MesloLGMDZ Nerd Font Mono, Bold",
                         fontsize=14,
-                        background="007D55",
+                        background=colors["clock"],
                         foreground="fff",
                         format="%H:%M:%S - %d/%m/%Y",
-                        #update_interval=60.0,
+                        # update_interval=60.0,
                         update_interval=1.0,
                         timezone=pytz.timezone(
                             "America/Argentina/Buenos_Aires")
                     ),
                     widget.TextBox(
                         text='',
-                        background="007D55",
+                        background=colors["clock"],
                         foreground="000",
                         padding=0,
                         fontsize=42
@@ -108,9 +117,9 @@ def create_screens():
                         margin_y=0,
                         border_color="000",
                         background="000",
-                        fill_color="00b2b2",
+                        fill_color=colors["bar_margin"],
                         frequency=1,
-                        graph_color="00FFFF",
+                        graph_color=colors["primary"],
                         line_width=2,
                         sample=100,
                         type="linefill"
@@ -126,7 +135,7 @@ def create_screens():
                 margin=[5, 5, 1, 5],
                 background="000000",
                 border_width=4,  # Draw top and bottom borders
-                border_color=["003D29", "000000", "003D29",
+                border_color=[colors["bar_margin"], "000000", colors["bar_margin"],
                               "000000"]  # Borders are magenta
             ),
             wallpaper="~/Imágenes/paisaje2.jpeg",
