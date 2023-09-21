@@ -149,4 +149,4 @@ configuration {
       sorting-method:    "name";
   }
 }
-@theme "windows11-grid-dark"
+@theme "windows11-list-dark"

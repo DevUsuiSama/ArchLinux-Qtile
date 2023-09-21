@@ -9,14 +9,13 @@ La finalidad de este repositorio no es otra que la de guardar y almacenar los di
 ## Necesarios
 | Paquete | Descripción |
 |---|---|
-| alsa-utils | Controlador De Tarjeta de Sonido |
 | picom | Compositor |
 | gnome-screenshot | Captura de Pantalla |
 | acpilight | Ajuste de Brillo |
 | network-manager-applet \| volumeicon | Systray |
 | rofi \| rofi-emoji | Iniciador |
-| xlayoutdisplay | Generar Comando para Xrandr |
 | libinput \| xf86-input-libinput \| xorg-xinput  | Manejar Dispositivos de Entrada |
+| pulseaudio \| pulseaudio-alsa \| pulseaudio-ctl | ``` Video \| Audio \| Micrófono => OBS ``` |
 
 ## Fuentes
 | Paquete | Descripción |
@@ -40,9 +39,9 @@ La finalidad de este repositorio no es otra que la de guardar y almacenar los di
 | ranger | Gestor de Archivos |
 | neofetch | CLI Información del Sistema |
 | oh-my-posh | Motor de Temas Shell |
-| feh | Visualizador de Imágenes |
-| pulseaudio | ``` Audio \| Micrófono => OBS ``` |
+| gnome-eog | Visualizador de Imágenes |
 | flatpak | Marco de Distribución y Aislamiento de Aplicaciones Linux |
+| pavucontrol | panel de control -> audio |
 
 ## Autor ✒️
 * **Usui, José Fernando** - *Diseño y Configuración*
