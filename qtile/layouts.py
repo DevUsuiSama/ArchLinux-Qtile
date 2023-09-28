@@ -12,7 +12,7 @@ def create_layouts():
     default = {
         "border_width": 1,
         "margin": 5,
-        "border_focus": "1DB2ED",
+        "border_focus": "0d7fac",
         "border_normal": "1D2330",
         "single_border_width": 0,
         "single_margin": 10,

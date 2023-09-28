@@ -30,6 +30,7 @@ def create_key_bindings(mod: str):
 
         # captura de pantalla
         Key([], "Print", lazy.spawn("gnome-screenshot -i"), desc="algo"),
+        Key([mod], "Print", lazy.spawn("gnome-screenshot"), desc="algp"),
 
         # full screen
         Key([mod], "f", lazy.window.toggle_fullscreen(), desc="fullscreen"),
