@@ -138,7 +138,7 @@ def create_screens():
                 border_color=[colors["bar_margin"], "000000", colors["bar_margin"],
                               "000000"]  # Borders are magenta
             ),
-            wallpaper="~/Imágenes/paisaje2.jpeg",
+            wallpaper="~/Imágenes/one_oracle.png",
             wallpaper_mode="fill"
         )
     ]
